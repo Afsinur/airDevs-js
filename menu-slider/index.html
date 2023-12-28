@@ -9,9 +9,22 @@
     <script src="./js/app.js" defer></script>
   </head>
   <body>
-    <div class="parent">
-      parent
-      <div class="child">child</div>
-    </div>
+    <body>
+      <nav class="bg-[#3e4042] text-[white] p-4">
+        <button
+          data-menu-btn
+          class="px-4 py-2 border border-[white] text-sm font-semibold"
+        >
+          menu
+        </button>
+      </nav>
+
+      <div data-menu-bar-container class="invisible pointer-events-none">
+        <div data-menu-bar class="-translate-x-full">
+          <p>Lorem ipsum dolor sit amet.</p>
+          <p>Lorem ipsum dolor sit amet.</p>
+        </div>
+      </div>
+    </body>
   </body>
 </html>

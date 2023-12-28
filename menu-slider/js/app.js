@@ -1,10 +1,19 @@
-let parent = document.querySelector(".parent");
-let child = document.querySelector(".child");
+let menuContainer = document.querySelector("[data-menu-bar-container]");
+let menuBar = document.querySelector("[data-menu-bar]");
+let menuBtn = document.querySelector("[data-menu-btn]");
 
-parent.addEventListener("click", () => {
-  console.log("parent");
+menuContainer.addEventListener("click", () => {
+  menuContainer.classList.add("invisible");
+  menuContainer.classList.add("pointer-events-none");
+  menuBar.classList.add("-translate-x-full");
 });
 
-child.addEventListener("click", (e) => {
+menuBar.addEventListener("click", (e) => {
   e.stopPropagation();
+});
+
+menuBtn.addEventListener("click", () => {
+  menuContainer.classList.remove("invisible");
+  menuContainer.classList.remove("pointer-events-none");
+  menuBar.classList.remove("-translate-x-full");
 });
