@@ -1,11 +1,10 @@
-let menuBar = document.querySelector("[data-menu-bar]");
-let menuBtn = document.querySelector("[data-menu-btn]");
-let menuClose = document.querySelector("[data-menu-close]");
+let parent = document.querySelector(".parent");
+let child = document.querySelector(".child");
 
-menuBtn.addEventListener("click", () => {
-  menuBar.classList.remove("-translate-x-full");
+parent.addEventListener("click", () => {
+  console.log("parent");
 });
 
-menuClose.addEventListener("click", () => {
-  menuBar.classList.add("-translate-x-full");
+child.addEventListener("click", (e) => {
+  e.stopPropagation();
 });
