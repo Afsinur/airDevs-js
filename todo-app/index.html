@@ -5,13 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>todo app</title>
     <script src="./js/app.js" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
     <form data-todo-form>
-      <input type="text" name="textData" placeholder="write.." />
-      <input type="submit" value="add" />
+      <input
+        type="text"
+        name="textData"
+        placeholder="write.."
+        class="p-2 border"
+      />
+      <input type="submit" value="add" class="p-2 border" />
     </form>
 
-    <div data-todo-list></div>
+    <div data-todo-list class="w-[400px] my-6 grid gap-2"></div>
   </body>
 </html>
