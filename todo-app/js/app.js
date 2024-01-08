@@ -1,56 +1,72 @@
-let todoForm = document.querySelector("[data-todo-form]");
-let todoListContainer = document.querySelector("[data-todo-list]");
+const addForm = document.querySelector("[data-todo-form]");
+const listContainer = document.querySelector("[data-todo-list]");
 
 let dataBase = [];
 
-function deleteAndReturnAnArray(e) {
-  let filteredArray = dataBase.filter((obj, i) => {
-    if (obj.id != e) {
-      return true;
-    }
-  });
+function delAndShow() {
+  let todoItemLi = document.querySelectorAll("[data-todo-id]");
 
-  return filteredArray;
-}
+  todoItemLi.forEach((p) => {
+    p.addEventListener("dblclick", (e) => {
+      let id = e.target.dataset.todoId;
 
-function runAfterAddClick() {
-  let allTodoP = document.querySelectorAll("[data-todo-id]");
+      let filteredArray = dataBase.filter((obj, i) => {
+        if (obj.id != id) {
+          return true;
+        }
+      });
 
-  allTodoP.forEach((itm) => {
-    itm.addEventListener("dblclick", (e) => {
-      //after delete update database
-      dataBase = deleteAndReturnAnArray(e.target.dataset.todoId);
-      showDbToHtmlPage();
+      dataBase = filteredArray;
+      localStorage.setItem("arifTodo", JSON.stringify(dataBase));
+
+      listContainer.innerHTML = ``;
+      dataBase.forEach((obj, i) => {
+        listContainer.innerHTML += `<p data-todo-id="${obj.id}">${obj.todo}</p>`;
+      });
+
+      delAndShow();
     });
   });
 }
 
-todoForm.addEventListener("submit", (e) => {
-  //preventing the default behavour of the from
+addForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  //getting the input value
-  let val = e.target.textData.value;
-  //making an object for "dataBase"
+  //add
+  let val = addForm.textData.value;
   let obj = { id: `id_${Date.now()}`, todo: val };
-  //saving the data
   dataBase.push(obj);
-  showDbToHtmlPage();
-  //reseting the form's inputs value
-  e.target.reset();
+
+  localStorage.setItem("arifTodo", JSON.stringify(dataBase));
+
+  listContainer.innerHTML = ``;
+  dataBase.forEach((obj, i) => {
+    listContainer.innerHTML += `<p data-todo-id="${obj.id}">${obj.todo}</p>`;
+  });
+  //delete
+
+  delAndShow();
+
+  //reset form
+  addForm.reset();
 });
 
-function showDbToHtmlPage() {
-  //shoing the data to the html page
-  todoListContainer.innerHTML = "";
-  dataBase.forEach((obj, i) => {
-    todoListContainer.innerHTML += `
-      <p data-todo-id="${obj.id}" class="p-2 bg-gray-100 cursor-pointer text-sm font-semibold">
-        <span class="select-none pointer-events-none">
-          ${obj.todo}
-        </span>
-      </p>
-      `;
-  });
+function init() {
+  let stringArray = localStorage.getItem("arifTodo");
 
-  runAfterAddClick();
+  if (stringArray != null) {
+    let dbArr = JSON.parse(stringArray);
+
+    dataBase = dbArr;
+
+    listContainer.innerHTML = ``;
+    dataBase.forEach((obj, i) => {
+      listContainer.innerHTML += `<p data-todo-id="${obj.id}">${obj.todo}</p>`;
+    });
+
+    delAndShow();
+  } else {
+    listContainer.innerHTML = `no data found!`;
+  }
 }
+
+init();
